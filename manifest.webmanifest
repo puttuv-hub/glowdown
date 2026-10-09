@@ -1,0 +1,11 @@
+{
+  "name": "Glowdown — Beautiful Countdown Timer",
+  "short_name": "Glowdown",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1026",
+  "theme_color": "#0b1026",
+  "description": "A customizable fullscreen countdown timer that works offline.",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1026" />
+  <meta name="description" content="A beautiful, customizable fullscreen countdown timer. Choose a preset or create any countdown, with sound, notifications and focus mode." />
+  <meta name="color-scheme" content="dark light" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Glowdown — Your beautiful countdown timer</title>
+</head>
+<body data-theme="aurora">
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <div class="ambient ambient-three" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <a href="#home" class="brand" aria-label="Glowdown home">
+        <span class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="26" r="15" stroke="currentColor" stroke-width="4"/><path d="M24 13V7M18 7h12M24 26l7-7" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><circle cx="24" cy="26" r="3" fill="currentColor"/></svg>
+        </span>
+        <span>glowdown<span class="brand-dot">.</span></span>
+      </a>
+      <div class="header-actions">
+        <span class="header-hint">Make every second count <span aria-hidden="true">✦</span></span>
+        <button id="focusButton" class="header-button" type="button" title="Fullscreen focus mode (F)" aria-label="Enter fullscreen focus mode">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3M21 16v3a2 2 0 0 1-2 2h-3"/></svg>
+          <span id="focusButtonText">Focus mode</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="home">
+      <section class="intro" aria-labelledby="pageTitle">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> YOUR TIME, YOUR WAY</div>
+        <h1 id="pageTitle">Make time <span class="gradient-word">beautiful.</span></h1>
+        <p>A colorful little space to focus, study, work or simply count down to something great.</p>
+      </section>
+
+      <section class="timer-stage" aria-label="Countdown timer">
+        <div class="timer-topline">
+          <span class="timer-label"><span class="timer-label-icon" aria-hidden="true">✳</span> YOUR COUNTDOWN</span>
+          <span class="state-pill" id="statePill"><span class="state-dot"></span><span id="stateText">READY TO GO</span></span>
+        </div>
+
+        <div class="timer-content">
+          <div class="session-title" id="sessionTitle">30 minute focus</div>
+          <h2 class="flip-heading" aria-hidden="true">COUNTDOWN</h2>
+          <div class="time-display" role="timer" aria-label="Countdown remaining">
+            <div class="time-unit"><span class="time-value" id="daysValue">00</span><span class="time-unit-label">DAYS</span></div>
+            <span class="time-separator" aria-hidden="true">:</span>
+            <div class="time-unit"><span class="time-value" id="hoursValue">00</span><span class="time-unit-label">HOURS</span></div>
+            <span class="time-separator" aria-hidden="true">:</span>
+            <div class="time-unit"><span class="time-value" id="minutesValue">30</span><span class="time-unit-label">MINUTES</span></div>
+            <span class="time-separator" aria-hidden="true">:</span>
+            <div class="time-unit"><span class="time-value" id="secondsValue">00</span><span class="time-unit-label">SECONDS</span></div>
+          </div>
+          <div id="flipDisplay" class="flip-display" role="timer" aria-label="30 minutes remaining" aria-live="off" hidden></div>
+          <p class="timer-subtitle" id="timerSubtitle">A fresh start is one click away.</p>
+        </div>
+
+        <div class="progress-area">
+          <div class="progress-heading"><span>PROGRESS</span><span id="progressText">0%</span></div>
+          <div class="progress-track" id="progressTrack" role="progressbar" aria-label="Countdown progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <div class="timer-footer">
+          <div class="timer-actions">
+            <button id="startButton" class="button button-primary" type="button">
+              <svg id="startIcon" class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2a1 1 0 0 1 1.5-.87l10 6.8a1.05 1.05 0 0 1 0 1.74l-10 6.8A1 1 0 0 1 8 18.8z"/></svg>
+              <span id="startButtonText">Start timer</span>
+            </button>
+            <button id="restartButton" class="button button-secondary" type="button">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11a9 9 0 1 1 2.6 6.4M3 4v7h7"/></svg>
+              Restart
+            </button>
+          </div>
+          <span class="end-time" id="endTime"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span id="endTimeText">Set your pace</span></span>
+        </div>
+        <div class="completion-burst" id="completionBurst" aria-hidden="true"></div>
+      </section>
+
+      <div class="settings-grid">
+        <section class="panel presets-panel" aria-labelledby="presetsTitle">
+          <div class="panel-heading"><div><span class="section-kicker">ONE-TAP TIMERS</span><h2 id="presetsTitle">Pick a duration <span aria-hidden="true">⚡</span></h2></div><span class="panel-annotation">Ready in a tap</span></div>
+          <div class="preset-grid" id="presetGrid">
+            <button class="preset" type="button" data-seconds="10" data-label="10 second countdown">10 sec</button>
+            <button class="preset" type="button" data-seconds="20" data-label="20 second countdown">20 sec</button>
+            <button class="preset" type="button" data-seconds="30" data-label="30 second countdown">30 sec</button>
+            <button class="preset" type="button" data-seconds="60" data-label="1 minute countdown">1 min</button>
+            <button class="preset" type="button" data-seconds="300" data-label="5 minute focus">5 min</button>
+            <button class="preset" type="button" data-seconds="600" data-label="10 minute focus">10 min</button>
+            <button class="preset" type="button" data-seconds="900" data-label="15 minute focus">15 min</button>
+            <button class="preset active" type="button" data-seconds="1800" data-label="30 minute focus" aria-pressed="true">30 min</button>
+            <button class="preset" type="button" data-seconds="3600" data-label="1 hour countdown">1 hour</button>
+            <button class="preset" type="button" data-seconds="7200" data-label="2 hour countdown">2 hours</button>
+            <button class="preset" type="button" data-seconds="21600" data-label="6 hour countdown">6 hours</button>
+            <button class="preset" type="button" data-seconds="43200" data-label="12 hour countdown">12 hours</button>
+            <button class="preset" type="button" data-seconds="86400" data-label="1 day countdown">1 day</button>
+            <button class="preset" type="button" data-seconds="172800" data-label="2 day countdown">2 days</button>
+            <button class="preset" type="button" data-seconds="86400" data-label="24 hour countdown">24 hours</button>
+            <button class="preset" type="button" data-seconds="172800" data-label="48 hour countdown">48 hours</button>
+          </div>
+          <div class="tip-line"><span aria-hidden="true">💡</span> Choose a preset, then press <strong>Start timer</strong>.</div>
+        </section>
+
+        <section class="panel custom-panel" aria-labelledby="customTitle">
+          <div class="panel-heading"><div><span class="section-kicker">MADE FOR YOU</span><h2 id="customTitle">Custom countdown <span aria-hidden="true">✳</span></h2></div></div>
+          <p class="panel-description">Set any duration, from a few seconds to many days.</p>
+          <form id="customForm">
+            <div class="custom-input-grid">
+              <label class="time-field"><span>Days</span><input id="customDays" name="days" type="number" inputmode="numeric" min="0" max="9999" step="1" value="0" required /></label>
+              <label class="time-field"><span>Hours</span><input id="customHours" name="hours" type="number" inputmode="numeric" min="0" max="9999" step="1" value="0" required /></label>
+              <label class="time-field"><span>Minutes</span><input id="customMinutes" name="minutes" type="number" inputmode="numeric" min="0" max="9999" step="1" value="0" required /></label>
+              <label class="time-field"><span>Seconds</span><input id="customSeconds" name="seconds" type="number" inputmode="numeric" min="0" max="9999" step="1" value="0" required /></label>
+            </div>
+            <label class="name-field"><span>Timer name <span class="optional">(optional)</span></span><input id="customName" name="name" maxlength="45" type="text" placeholder="e.g. Study session, Break time..." /></label>
+            <p class="form-error" id="formError" role="alert" hidden></p>
+            <button class="button set-button" type="submit"><span aria-hidden="true">＋</span> Set custom timer</button>
+          </form>
+        </section>
+
+        <section class="panel preferences-panel" aria-labelledby="personalizeTitle">
+          <div class="panel-heading"><div><span class="section-kicker">SET THE VIBE</span><h2 id="personalizeTitle">Make it yours <span aria-hidden="true">✦</span></h2></div></div>
+          <div class="theme-label">Color theme</div>
+          <div class="theme-grid" role="group" aria-label="Color theme">
+            <button class="theme-option selected" data-theme-choice="aurora" type="button" aria-pressed="true"><span class="theme-swatch swatch-aurora"></span><span>Aurora</span></button>
+            <button class="theme-option" data-theme-choice="sunset" type="button" aria-pressed="false"><span class="theme-swatch swatch-sunset"></span><span>Sunset</span></button>
+            <button class="theme-option" data-theme-choice="ocean" type="button" aria-pressed="false"><span class="theme-swatch swatch-ocean"></span><span>Ocean</span></button>
+            <button class="theme-option" data-theme-choice="citrus" type="button" aria-pressed="false"><span class="theme-swatch swatch-citrus"></span><span>Citrus</span></button>
+            <button class="theme-option" data-theme-choice="flip" type="button" aria-pressed="false" title="Cream and black classic split-flap clock"><span class="theme-swatch swatch-flip"></span><span>Classic Flip</span></button>
+          </div>
+          <div class="option-list">
+            <label class="toggle-row"><span class="toggle-copy"><strong>Completion sound</strong><small>Play a cheerful sound at zero</small></span><span class="switch"><input type="checkbox" id="soundToggle" checked /><span class="slider-ui"></span></span></label>
+            <label class="toggle-row"><span class="toggle-copy"><strong>Desktop notification</strong><small>Alert when the countdown finishes</small></span><span class="switch"><input type="checkbox" id="notificationToggle" /><span class="slider-ui"></span></span></label>
+            <label class="toggle-row"><span class="toggle-copy"><strong>Keep screen awake</strong><small>Useful during long focus sessions</small></span><span class="switch"><input type="checkbox" id="wakeToggle" /><span class="slider-ui"></span></span></label>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer"><span>✦ Made for all your big and little moments.</span><span>SPACE <b>start / pause</b><i>·</i> R <b>restart</b><i>·</i> F <b>focus</b></span></footer>
+  </div>
+
+  <div class="screenreader-only" aria-live="polite" aria-atomic="true" id="announcer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>
