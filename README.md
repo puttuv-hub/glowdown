@@ -1,74 +1,38 @@
-# Glowdown ✦ — Beautiful Fullscreen Countdown Timer
+# Glowdown — Animated Clocks Edition
 
-A vibrant, responsive countdown timer that runs entirely in your browser. **No build tools, no account, no API keys, no hosting cost.** Ideal for studying, exercise, breaks, work and events.
+A beautiful, **single-file countdown timer** with 20 themes, working 3D split-flap animation and timer-only fullscreen mode. Free to publish using GitHub Pages.
 
-## Features
+## Highlights
 
-- **16 one-tap presets:** 10 sec, 20 sec, 30 sec, 1 min, 5 min, 10 min, 15 min, 30 min, 1 hour, 2 hours, 6 hours, 12 hours, 1 day, 2 days, 24 hours and 48 hours.
-- **Any custom duration:** days, hours, minutes and seconds, plus an optional session name.
-- **Fullscreen focus mode:** works with browsers supporting the Fullscreen API and falls back to an immersive page view.
-- **Start, pause, resume and restart**, with visual progress and estimated finish time.
-- **5 color themes:** Aurora, Sunset, Ocean, Citrus, **Classic Flip** (cream background, black split-flap cards; fullscreen style based on the supplied reference).
-- Optional **completion chime**, **desktop notifications** and **keep-screen-awake** (on supported devices).
-- **Remembers running countdowns across page refreshes**, using a real end timestamp (so switching tabs or sleeping a device will not slow the timer).
-- Can work **offline** after your first visit thanks to service-worker caching when hosted via HTTPS.
-- Responsive on desktop and mobile, keyboard shortcuts and reduced-motion accessibility support.
+- **Classic Flip really flips:** every changing digit animates in two parts — the old top card folds away and the new bottom card folds into place in about 0.58 seconds. The card returns to its resting state after the animation. The animation honors your browser's reduced-motion setting.
+- **20 themes:** Editorial, Classic Flip, Paper, Matcha, Blush, Lilac, Aurora, Ocean, Sunset, Noir, Citrus, Chrome, Stopwatch, Old Clock, Pocket Watch, Retro Alarm, Retro LED, Neon Glow, Marble Gold, and Hourglass.
+- **Only the time appears on the clock face:** no titles, logos, unit labels, quotes, or controls. Decorative watch bezels are part of the stopwatch/clock themes.
+- **Format follows the duration unit:** 10 seconds -> `10`, 30 minutes -> `30:00`, 24 hours -> `24:00:00`, 48 hours -> `48:00:00`, two days -> `2:00:00:00`. The Classic Flip theme pads the leading seconds/days card to two digits.
+- Custom days/hours/minutes/seconds and optional clock-format override.
+- Countdown presets, pause/resume/reset, sound, desktop notifications, screen wake lock (where browser supported), precise deadline-based timing, saved settings, and responsive fullscreen focus mode.
+- No external fonts, JavaScript libraries, user accounts, backend or trackers.
 
-## Run locally
+## How to install on GitHub Pages
 
-Open `index.html` in your browser. For offline caching, notification permissions and some fullscreen features, run it from localhost or HTTPS instead of `file://`.
+1. Unzip the download.
+2. Open your existing `glowdown` repository on GitHub.
+3. Replace its **root-level** `index.html` with this updated `index.html` and commit changes.
+4. Check **Settings -> Pages**: `Deploy from a branch`, `main`, `/(root)`.
+5. Open `https://YOUR-USERNAME.github.io/glowdown/` when publishing is complete.
 
-For example, with Python installed:
+This edition is a **self-contained HTML file**; there is no need for separate `style.css` or `script.js`. If you deployed the original version with `service-worker.js`, remove it from the repository and unregister its old service worker in Chrome DevTools > Application > Service Workers if an older cached design keeps appearing. A hard refresh (Ctrl+Shift+R) also helps with ordinary browser caching.
 
-```bash
-python -m http.server 8000
-```
+## Use locally / copy-paste
 
-Then visit `http://localhost:8000`.
+Open `index.html` in your browser, or open it in any code editor and copy the entire contents into your GitHub repository's `index.html`.
 
-## Publish to GitHub Pages (free)
+## Keyboard controls
 
-1. Make a new **public** GitHub repository, e.g. `glowdown`.
-2. Upload **all project files** to the repository root (or unzip this package and upload its contents). Commit the changes.
-3. Open **Settings → Pages** in the repository.
-4. Under **Build and deployment**, select **Deploy from a branch**. Set branch to **main** and folder to **/(root)**, then **Save**.
-5. Once deployment completes, open your website at:
+- `Space`: start/pause/resume
+- `R`: reset
+- `F`: fullscreen timer
+- `Esc` or click the fullscreen clock: leave fullscreen
 
-   `https://YOUR-USERNAME.github.io/glowdown/`
+## Motion, timer accuracy, and privacy
 
-If your repository has another name, replace `glowdown` in the URL with that repository name. You can bookmark the URL, open it in Chrome, or add it to your phone home screen.
-
-## Keyboard shortcuts
-
-| Shortcut | Action |
-|---|---|
-| Space | Start, pause or resume (when not using an input or button) |
-| R | Reset the current timer |
-| F | Enter or exit fullscreen focus mode |
-| Esc | Exit focus mode |
-
-## How timers behave
-
-- Choosing a new preset or submitting custom settings **resets** the timer to that duration. Then press **Start timer**.
-- **Restart** resets the selected timer without starting it.
-- If the page is closed and later reopened, a **running** countdown catches up using the clock. A **paused** countdown stays paused.
-- If you reopen a completed countdown, the completed state is displayed without an unexpected sound.
-- Browser audio restrictions require interacting with the page before sounds can play; notifications require permission. The page must remain open for a completion alert to be delivered reliably. Some browsers do not support wake lock or notifications.
-- Offline access requires a successfully loaded first visit over localhost/HTTPS. The site does **not** need a server while the timer is in use.
-
-## Files
-
-- `index.html` — page structure and settings
-- `style.css` — colorful responsive theme + fullscreen view
-- `script.js` — accurate timer, persistence, sounds, controls
-- `service-worker.js` — offline cache
-- `manifest.webmanifest` — installable web-app metadata
-- `favicon.svg` — site icon
-
-### Customization
-
-To use the new theme, open **Make it yours → Classic Flip** and optionally click **Focus mode**. Short timers show only two split cards, while longer durations automatically add minutes, hours, and days. Your selected theme persists across visits.
-
-Change the default timer in `script.js` (`defaultState.duration`, `defaultState.remainingMs`, `defaultState.label`) or edit `.preset` buttons in `index.html`. The full palette is defined near the top of `style.css`.
-
-MIT license — free to use and modify.
+CSS split-flap motion works in modern browsers. Browser-level 'Reduce motion' disables flipping and displays digits instantly. Remaining time is calculated against an absolute deadline to avoid accumulating setInterval drift; background tab throttling may delay display updates but the remaining time catches up when the tab becomes active. Sound requires a supported audio device and browser permission to play, and notifications/wake locks are subject to browser permissions. Preferences live in the browser's local storage.
